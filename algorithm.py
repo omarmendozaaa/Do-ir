@@ -3,9 +3,10 @@ from fuzzywuzzy import process, fuzz
 from openpyxl import Workbook, load_workbook
 import tkinter as tk
 
-registro_oficial = 'registro_oficial.xlsx'
-
-registro = load_workbook(registro_oficial)
+def crear_registro(oficial):
+    registro_oficial = oficial[0]
+    registro = load_workbook(registro_oficial)
+    return registro
 
 def medio(find, file, sheet_name_ ):
     medios_array =  pd.read_excel(file, sheet_name=sheet_name_)
@@ -23,7 +24,7 @@ def posicion(semana,dia):
     columna = 67 + dias + separaciones + dia - 1
     return str(chr(columna))
 
-def algorith(file, file2, semana, dia):
+def algorith(file, file2, semana, dia, registro, path):
     primero_con = pd.read_excel(file, sheet_name='PRIMERO')
     cuarto_con = pd.read_excel(file, sheet_name='CUARTO')
     quinto_con = pd.read_excel(file, sheet_name='QUINTO')
@@ -94,4 +95,4 @@ def algorith(file, file2, semana, dia):
                 temp_registrer = registro[seccion[1]]
                 temp_registrer[pos] = 'F'
                 #print('{0:2d} {1:44s} {2:8s} {3:5s}'.format(i, actual, 'FALTÓ', 'FALTÓ'))
-    registro.save('registro_oficial.xlsx')
+    registro.save(path)
